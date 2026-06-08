@@ -10,6 +10,7 @@ int main() {
 
   volume = (4.0 / 3.0) * PI * radius * radius * radius;
   printf("Volume = %.2f\n", volume);
+  printf("Item\tunit\tPurchase\n\tPrice\tDate\n");
 
   return 0;
 }
