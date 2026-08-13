@@ -42,4 +42,7 @@ int main(void) {
   while ((my_fgets(s, sizeof s, fp)) != NULL) {
     printf("%d: %s", ++lineCounter, s);
   };
+
+  fclose(fp);
+  return 0;
 }
