@@ -12,18 +12,16 @@ char *my_fgets(char *buffer, int maximum_capacity, FILE *stream) {
     c = fgetc(stream);
 
     if (c == EOF) {
-      buffer[i] = '\0';
-      return buffer;
+      if (i == 0)
+        return NULL;
+      break;
     }
-    buffer[i] = c;
-    if (c == '\n') {
-      buffer[i] = '\n';
-      buffer[i + 1] = '\0';
-      return buffer;
-    }
-    c = fgetc(stream);
-    i++;
-  };
+
+    buffer[i++] = c;
+
+    if (c == '\n')
+      break;
+  }
 
   buffer[i] = '\0';
   return buffer;
