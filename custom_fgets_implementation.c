@@ -1,19 +1,16 @@
 #include <stdio.h>
 
 char *my_fgets(char *buffer, int maximum_capacity, FILE *stream) {
-  if (maximum_capacity <= 0) {
+  if (maximum_capacity <= 0)
     return NULL;
-  }
 
   int available_capacity = maximum_capacity - 1;
   int i = 0;
-  int c = fgetc(stream);
-
-  if (c == EOF) {
-    return NULL;
-  }
+  int c;
 
   while (i < available_capacity) {
+    c = fgetc(stream);
+
     if (c == EOF) {
       buffer[i] = '\0';
       return buffer;
