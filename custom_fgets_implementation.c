@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 char *my_fgets(char *buffer, int maximum_capacity, FILE *stream) {
-  if (maximum_capacity <= 0)
+  if (buffer == NULL || maximum_capacity <= 0)
     return NULL;
 
   int available_capacity = maximum_capacity - 1;
@@ -41,7 +41,7 @@ int main(void) {
 
   while ((my_fgets(s, sizeof s, fp)) != NULL) {
     printf("%d: %s", ++lineCounter, s);
-  };
+  }
 
   fclose(fp);
   return 0;
