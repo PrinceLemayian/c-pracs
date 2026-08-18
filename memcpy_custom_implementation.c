@@ -9,7 +9,7 @@ void *my_memcpy(void *dest, const void *src, size_t size) {
   for (size_t i = 0; i < size; i++)
     d[i] = s[i];
 
-  return 0;
+  return dest;
 }
 
 int main(void) {
