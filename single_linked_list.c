@@ -12,6 +12,21 @@ typedef struct Node Node;
 // Global pointer marking the beginning of the list
 Node *start = NULL; // NULL means the list is empty
 
+/* Read an integer safely.
+   Returns 1 on success, 0 if the input was not a valid integer.
+   On failure it flushes the rest of the line so the bad characters
+   don't get read again (which would otherwise cause infinite loops). */
+int readInt(int *out) {
+  if (scanf("%d", out) != 1) {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {
+      // discard leftover characters from the bad input
+    }
+    return 0;
+  }
+  return 1;
+}
+
 /* Create a new node */
 Node *getNode(void) {
   Node *newNode = malloc(sizeof(Node));
@@ -23,7 +38,9 @@ Node *getNode(void) {
   }
 
   printf("Enter data: ");
-  scanf("%d", &newNode->data);
+  while (!readInt(&newNode->data)) {
+    printf("Invalid input. Enter an integer: ");
+  }
 
   // The node doesn't point anywhere yet
   newNode->next = NULL;
@@ -154,7 +171,10 @@ void insertAtMiddle(void) {
   nodeCount = countNode(start);
 
   printf("Enter position: ");
-  scanf("%d", &position);
+  if (!readInt(&position)) {
+    printf("Invalid input. Position must be an integer.\n");
+    return;
+  }
 
   // Only allow real middle positions (not the head, not the end/beyond)
   if (position <= 1 || position >= nodeCount) {
@@ -195,7 +215,10 @@ void search(void) {
   }
 
   printf("Enter value to search: ");
-  scanf("%d", &value);
+  if (!readInt(&value)) {
+    printf("Invalid input. Value must be an integer.\n");
+    return;
+  }
 
   // Walk through the list one node at a time
   while (temp != NULL) {
@@ -226,7 +249,10 @@ void deleteByValue(void) {
   }
 
   printf("Enter value to delete: ");
-  scanf("%d", &value);
+  if (!readInt(&value)) {
+    printf("Invalid input. Value must be an integer.\n");
+    return;
+  }
 
   /* If the value is in the first node */
   // The head is a special case because there is no node before it.
@@ -286,7 +312,11 @@ int menu(void) {
   printf("====================================\n");
   printf("Enter your choice: ");
 
-  scanf("%d", &choice);
+  // If the user types something that isn't a number, readInt flushes the
+  // bad input and we return -1 so main's default case reports it.
+  if (!readInt(&choice)) {
+    return -1;
+  }
 
   return choice;
 }
@@ -303,9 +333,10 @@ int main(void) {
     case 1:
       if (start == NULL) {
         printf("Number of nodes to create: ");
-        scanf("%d", &numberOfNodes);
 
-        if (numberOfNodes <= 0) {
+        if (!readInt(&numberOfNodes)) {
+          printf("Invalid input. Please enter an integer.\n");
+        } else if (numberOfNodes <= 0) {
           printf("Number of nodes must be greater than 0.\n");
         } else {
           createList(numberOfNodes);
