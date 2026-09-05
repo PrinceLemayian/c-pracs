@@ -187,6 +187,14 @@ void insertAtMiddle(void) {
 
   nodeCount = countNode(start);
 
+  // A "middle" position only exists once there are at least 2 nodes.
+  // For shorter lists, direct the user to the appropriate operation.
+  if (nodeCount < 2) {
+    printf("List is too short for a middle insert. "
+           "Use insert at beginning or end instead.\n");
+    return;
+  }
+
   printf("Enter position: ");
   if (!readInt(&position)) {
     printf("Invalid input. Position must be an integer.\n");
