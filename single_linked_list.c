@@ -325,7 +325,8 @@ int menu(void) {
   printf("7. Traverse left to right\n");
   printf("8. Traverse right to left\n");
   printf("9. Count nodes\n");
-  printf("10. Exit\n");
+  printf("10. Delete entire list\n");
+  printf("11. Exit\n");
   printf("====================================\n");
   printf("Enter your choice: ");
 
@@ -403,6 +404,15 @@ int main(void) {
       break;
 
     case 10:
+      if (start == NULL) {
+        printf("List is already empty.\n");
+      } else {
+        freeList();
+        printf("Entire list deleted.\n");
+      }
+      break;
+
+    case 11:
       printf("Exiting program...\n");
       freeList();
       return 0;
