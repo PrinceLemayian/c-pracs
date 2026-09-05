@@ -61,6 +61,23 @@ int countNode(Node *ptr) {
   return count;
 }
 
+/* Free every node in the list */
+void freeList(void) {
+  Node *temp = start;
+  Node *nextNode;
+
+  // Walk the list, saving the next pointer BEFORE freeing the current node.
+  // If we freed first, temp->next would be reading freed memory.
+  while (temp != NULL) {
+    nextNode = temp->next;
+    free(temp);
+    temp = nextNode;
+  }
+
+  // Reset the head so the list is a valid empty list again
+  start = NULL;
+}
+
 /* Create a list */
 void createList(int n) {
   int i;
@@ -387,6 +404,7 @@ int main(void) {
 
     case 10:
       printf("Exiting program...\n");
+      freeList();
       return 0;
 
     default:
